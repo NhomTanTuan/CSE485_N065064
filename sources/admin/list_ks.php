@@ -16,6 +16,7 @@
                     <th>Trạng thái</th>
                     <th>Ngày tạo</th>
                     <th>Giờ tạo</th>
+					<th>Loại phòng</th>
 					<th>Edit</th>
 					<th>Delete</th>
 				</tr>
@@ -86,7 +87,8 @@
 							echo $ngaydang_v[2].'-'.$ngaydang_v[1].'-'.$ngaydang_v[0]; 
                             ?>
                         </td>
-                        <td><?php echo $phongks['giodang']; ?></td>	
+                        <td><?php echo $phongks['giodang']; ?></td>
+						<td><a href="list_loaiphong.php?id=<?php echo $phongks['id']; ?>"><i class="fa fa-eye"></i></a></td>
 						<td align="center"><a href="edit_ks.php?id=<?php echo $phongks['id']; ?>"><img width="16" src="../image/icon_edit.png"></a></td>						
 						<td align="center"><a href="delete_ks.php?id=<?php echo $phongks['id'];?>" onclick="return confirm('Bạn có thực sự muốn xóa không');"><img width="16" src="../image/icon_delete.png"></a></td>
 					</tr>

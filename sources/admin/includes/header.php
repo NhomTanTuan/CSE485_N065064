@@ -6,6 +6,7 @@
         header('location:../ĐPKS.php');
     }
 ?>
+<?php include('config/config.php') ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -29,7 +30,7 @@
     <link href="../css/plugins/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../font-awesome/css/all.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -37,7 +38,7 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]--> 
-    <script src="../js/jquery.js"></script>   
+    <script src="../js/jquery.js"></script>
 </head>
 
 <body>
@@ -63,7 +64,7 @@
                     <a href="edit_user.php?id=<?php echo $_SESSION['id']; ?>"><i class="fa fa-fw fa-user"></i> Profile</a>
                 </li>                        
                 <li>
-                    <a href="./doipass.php"><i class="fa fa-fw fa-gear"></i>Đổi mật khẩu</a>
+                    <a href="./doipass.php"><i class="fa fa-fw fa-cog"></i>Đổi mật khẩu</a>
                 </li>
                 <li class="divider"></li>
                 <li>

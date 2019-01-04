@@ -14,6 +14,7 @@
 					<th>Địa chỉ</th>
 					<th>Quyền</th>
 					<th>Edit</th>
+					<th>Reset</th>
 					<th>Delete</th>
 				</tr>
             </thead>
@@ -75,7 +76,8 @@
 							}						
 							?>
 						</td>					
-						<td align="center"><a href="edit_user.php?id=<?php echo $user['id']; ?>"><img width="16" src="../image/icon_edit.png"></a></td>						
+						<td align="center"><a href="edit_user.php?id=<?php echo $user['id']; ?>"><img width="16" src="../image/icon_edit.png"></a></td>
+						<td align="center"><a href="reset_user.php?id=<?php echo $user['id']; ?>"><img width="16" src="../image/icon_reset.png"></a></td>
 						<td align="center"><a href="delete_user.php?id=<?php echo $user['id'];?>" onclick="return confirm('Bạn có thực sự muốn xóa không');"><img width="16" src="../image/icon_delete.png"></a></td>
 					</tr>
 					<?php		

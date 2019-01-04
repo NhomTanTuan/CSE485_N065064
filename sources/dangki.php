@@ -8,11 +8,14 @@ if(isset($_SESSION['username'])){header('location:ĐPKS.php');} ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Đăng kí</title>
+    <link href="./font-awesome/css/all.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="./css/btl.css">
     <link rel="stylesheet" href="./css/dangki.css">
     <script src="./js/jquery-3.3.1.min.js"></script>
     <script src="./js/formlogin.js"></script>
 </head>
 <body>
+<a href="ĐPKS.php"><i class="fa fa-home tranghome"></i></a>
     <div id="dangnhap">
         <div class="dang">
             <div><b class="text_dangnhap">Đăng kí</b></div>

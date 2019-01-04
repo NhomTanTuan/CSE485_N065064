@@ -1,12 +1,37 @@
 <?php include('includes/header.php'); ?>
 <?php include('../connection.php');?>
+<?php include('../inc/function.php'); ?>
 <script src="../js/formlogin.js"></script>
 <style>
 .required{color:red;}
 </style>
+<script language="javascript">
+	function checkall(class_name,obj)
+	{
+		var items = document.getElementsByClassName(class_name);
+		if(obj.checked == true)
+		{
+			for(i=0;i<items.length;i++)
+				items[i].checked = true;
+		}
+		else
+		{
+			for(i=0;i<items.length;i++)
+				items[i].checked = false;	
+		}
+	}
+</script>
 <?php
     include('../inc/images_helper.php');
     if(isset($_POST['submit'])){
+		if($_POST['parent']==0)
+		{
+			$parent_id=0;
+		}
+		else
+		{
+			$parent_id=$_POST['parent'];	
+		}
         $khachsan=$_POST['khachsan'];
         $giagoc=$_POST['giagoc'];
         $giakm=$_POST['giakm'];
@@ -15,6 +40,9 @@
         $noidung=$_POST['noidung'];
 		$status=$_POST['status'];
 		$tomtat=$_POST['tomtat'];
+		$diachi=$_POST['diachi'];
+		$thanhpho=$_POST['thanhpho'];
+		$thue=$_POST['thue'];
         //upload hình ảnh
         if ($_FILES['img']['size']=='') {
 			$message="<p class='required'>Bạn chưa nhập file ảnh<p>";
@@ -58,8 +86,15 @@
 			$ngaydang_in=$ngaydang_ht[2].'-'.$ngaydang_ht[1].'-'.$ngaydang_ht[0];
 			$giodang_in=$_POST['giodang'];
 			//insert dữ liệu
-			$query_in="INSERT INTO khachsan(title,giagoc,giakhuyenmai,slphong,songuoi,status,noidung,anh,anh_thumb,ngaydang,giodang,tomtat)
-			VALUES('$khachsan','$giagoc','$giakm','$slphong','$songuoi','$status','$noidung','$link_img','$thumb','$ngaydang_in','$giodang_in','$tomtat')";
+			$chrole=$_POST['chrole'];
+			$countcheckrole=count($chrole);
+			$del_role='';
+			for ($i=0; $i < $countcheckrole; $i++) 
+			{ 
+				$del_role=$del_role.','.$chrole[$i];	
+			}
+			$query_in="INSERT INTO khachsan(title,danhmuc,giagoc,giakhuyenmai,slphong,songuoi,status,noidung,anh,anh_thumb,ngaydang,giodang,tomtat,tiennghi,diachi,thanhpho,thue)
+			VALUES('$khachsan','$parent_id','$giagoc','$giakm','$slphong','$songuoi','$status','$noidung','$link_img','$thumb','$ngaydang_in','$giodang_in','$tomtat','$del_role','$diachi','$thanhpho','$thue')";
 			$results_in=mysqli_query($conn,$query_in);
 			if(mysqli_affected_rows($conn)==1)
 			{
@@ -77,6 +112,10 @@
     	<form name="frmadd_ks" method="POST" action="#" enctype="multipart/form-data">
 			<?php if(isset($message)){echo $message;}?>
 			<h3>Thêm khách sạn</h3>
+			<div class="form-group">
+				<label style="display:block;">Danh mục</label>
+				<?php selectCtrl('parent','forFormdim'); ?>
+			</div>
 			<div class="form-group">
 				<label>Khách sạn</label>
 				<input type="text" name="khachsan" value="<?php if(isset($_POST['khachsan'])){ echo $_POST['khachsan'];} ?>" class="form-control" required requiredmsg="Vui lòng nhập khách sạn!" placeholder="Tên khách sạn">				
@@ -99,6 +138,10 @@
 				<input type="text" name="songuoi" value="<?php if(isset($_POST['songuoi'])){ echo $_POST['songuoi'];} ?>" class="form-control" required requiredmsg="Vui lòng nhập số người!" placeholder="Số người">
 			</div>
 			<div class="form-group">
+				<label>Thuế(%)</label>
+				<input type="text" name="thue" value="<?php if(isset($_POST['thue'])){ echo $_POST['thue'];} ?>" class="form-control" required requiredmsg="Vui lòng nhập thuế khách sạn!" placeholder="Thuế">
+			</div>
+			<div class="form-group">
 				<label>Tóm tắt</label>
 				<textarea name="tomtat" style="Width:100%;height:100px;" class="form-control" value=""><?php if(isset($_POST['tomtat'])){ echo $_POST['tomtat'];} ?></textarea>
 			</div>
@@ -107,15 +150,47 @@
 				<textarea id="noidung" name="noidung" style="Width:100%;height:100px;" value=""><?php if(isset($_POST['noidung'])){ echo $_POST['noidung'];} ?></textarea>
 			</div>
 			<div class="form-group">
+				<label>Địa chỉ(Xã, Phường, Thị trấn, Quận, Huyện)</label>
+				<input name="diachi" class="form-control" value="<?php if(isset($_POST['diachi'])){ echo $_POST['diachi'];} ?>" placeholder="Địa chỉ">
+			</div>
+			<div class="form-group">
+				<label>Thành phố(Tỉnh)</label>
+				<input name="thanhpho" class="form-control" value="<?php if(isset($_POST['thanhpho'])){ echo $_POST['thanhpho'];} ?>"required requiredmsg="Vui lòng nhập thành phố!" placeholder="Thành phố">
+			</div>
+			<div class="form-group">
 				<label>Ảnh đại diện</label>
 				<input type="file" name="img" value="">
+			</div>
+			<div class="form-group">
+				<label>Chọn tiện nghi</label>
+				<div class="row">
+					<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+						<input type="checkbox" name="chkfull" onclick="checkall('chrole', this)">
+						<label>Full tiện nghi</label>
+					</div>
+				</div>
+				<div class="row">
+					<?php 
+						foreach ($mang as $mang_add) 
+						{
+						?>
+						<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+							<div class="role_item">
+								<input type="checkbox" name="chrole[]" class="chrole" value="<?php echo $mang_add['title'].'/'.$mang_add['icon']; ?>">
+								<label><?php echo $mang_add['title']; ?></label>
+							</div>
+						</div>
+						<?php
+						}
+					?>
+				</div>
 			</div>
             <div class="form-group">
 				<label>Ngày đăng</label>
 				<div id="datepicker" class="input-group date" data-date-format="dd-mm-yyyy"> 
 					<input class="form-control" readonly="true" type="text" name="ngaydang"> 
 					<span class="input-group-addon">
-						<i class="glyphicon glyphicon-calendar"></i>
+						<i class="fa fa-calendar-alt"></i>
 					</span>
 				</div>
 			</div>

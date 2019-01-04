@@ -25,7 +25,6 @@
                 $query="INSERT INTO danhmuc(danhmuc,parent_id,chucnang,ordernum,status) 
                     VALUES('$danhmuc','$parent_id','$chucnang','$ordernum','$status')";
                 $results=mysqli_query($conn,$query); 
-                kt_query($results,$query);	
                 if(mysqli_affected_rows($conn)==1)
                 {
                     echo "<p style='color:green;'>Thêm mới thành công</p>";
@@ -57,6 +56,7 @@
 				<label class="radio-inline"><input checked="checked" type="radio" name="chucnang" value="Bài viết">Bài viết</label>
 				<label class="radio-inline"><input type="radio" name="chucnang" value="Liên hệ">Liên hệ</label>
 				<label class="radio-inline"><input type="radio" name="chucnang" value="Trang chủ">Trang chủ</label>
+				<label class="radio-inline"><input type="radio" name="chucnang" value="Khách sạn">Khách sạn</label>
 			</div>
 			<div class="form-group">
 				<label>Thứ tự</label>

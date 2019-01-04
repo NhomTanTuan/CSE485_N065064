@@ -1,6 +1,10 @@
 <?php 
     session_start();
-    if(isset($_SESSION['username'])){ header('Location: ĐPKS.php');}
+    if(isset($_SESSION['username'])){ header('Location: ĐPKS.php');exit();}
+    if(isset($_GET['xem']) && isset($_GET['id']) && filter_var($_GET['id'],FILTER_VALIDATE_INT,array('min_range'=>1))){
+        $_SESSION['xemdangphan']=$_GET['xem'];
+        $_SESSION['iddangnhan']=$_GET['id'];
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,11 +13,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Đăng nhập</title>
+    <link href="./font-awesome/css/all.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="./css/btl.css">
     <link rel="stylesheet" href="./css/dangnhap.css">
     <script src="./js/jquery-3.3.1.min.js"></script>
     <script src="./js/formlogin.js"></script>
 </head>
 <body>
+<a href="ĐPKS.php"><i class="fa fa-home tranghome"></i></a>
     <div id="dangnhap">
         <div class="dang">
             <div><b class="text_dangnhap">Đăng nhập</b></div>
@@ -49,16 +56,23 @@
                 }
                 else{
                     $row=mysqli_fetch_array($query);
-                    session_start();
-                    echo $result_1;
-                    echo $username;
                     //tiến hành lưu tên đăng nhập vào session để tiện xử lý sau này
                     $_SESSION['username'] = $username;
                     $_SESSION['quyen'] = $row[quyen];
                     $_SESSION['id'] = $row[id];
                     // Thực thi hành động sau khi lưu thông tin vào session
                     // ở đây mình tiến hành chuyển hướng trang web tới một trang gọi là index.php
-                    header('Location: ĐPKS.php');
+                    if(isset($_SESSION['xemdangphan'])){
+                        if($_SESSION['xemdangphan']=='datphong'){
+                        header('Location: baivietks.php?id='.$_SESSION['iddangnhan']);
+                        exit();
+                        }else{
+                            header('Location: ĐPKS.php');
+                        }
+                    }
+                    else{
+                        header('Location: ĐPKS.php');
+                    }
                 }
             }
 	    ?>	

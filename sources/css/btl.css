@@ -13,6 +13,11 @@ body{
     background-color: antiquewhite;
     width: 100%;
 }
+.tranghome{
+    position: absolute;
+    left:25px;
+    top:9px;
+}
 .languages{
     float: right;
     padding:9px 40px 0 0;
